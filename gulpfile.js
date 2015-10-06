@@ -5,7 +5,10 @@ var gulp = require('gulp');
 var inject = require('gulp-inject');
 var concat = require('gulp-concat');
 var print = require('gulp-print');
+var ts = require('gulp-typescript');
 var angularFilesort = require('gulp-angular-filesort');
+var sourcemaps = require('gulp-sourcemaps');
+var uglify = require('gulp-uglify');
 
 gulp.task('css-task', function () {
     var target = gulp.src('./views/home/index.html');
@@ -50,11 +53,34 @@ gulp.task('javascript', function () {
         .pipe(gulp.dest('./app/views/home/'))
 });
 
+gulp.task('compile', function() {
+    var target = gulp.src('./views/home/index.html');
+    var appStream = gulp.src(['app/**/*.js']);
+    var tsResult = gulp.src('app/**/*.ts')
+        .pipe(sourcemaps.init()) // This means sourcemaps will be generated
+        .pipe(ts({
+            sortOutput: true
+        }));
+
+    return target
+        .pipe(inject(appStream
+            .pipe(print())
+            .pipe(concat('app.js'))
+            .pipe(gulp.src('app/**/*.ts'))
+                .pipe(sourcemaps.init()) // This means sourcemaps will be generated
+                .pipe(ts({
+                    sortOutput: true
+                }))
+            .pipe(sourcemaps.write())
+            .pipe(gulp.dest('.build/javascript')), { name: 'app' }))
+        .pipe(gulp.dest('./views/home/'))
+});
+
 gulp.task('watch', function() {
     // Watch .js files
     gulp.watch('app/*.js', ['javascript']);
     // Watch .ts files
-    gulp.watch('app/*.ts', ['typescript']);
+    gulp.watch('app/*.ts', ['debug']);
     // Watch .css files
     gulp.watch('src/*.css', ['css']);
 });

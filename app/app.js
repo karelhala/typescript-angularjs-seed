@@ -1,3 +1,4 @@
+/// <reference path='../typings/tsd.d.ts' />
 /**
  * Created by Karel on 5.10.2015.
  */
