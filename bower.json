@@ -1,0 +1,26 @@
+{
+  "name": "typescript-angularjs-seed",
+  "version": "0.0.0",
+  "authors": [
+    "Karel Hala <karelhala.91@gmail.com>"
+  ],
+  "description": "Seed application for angularjs in typescript",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.4.5",
+    "angular-route": "~1.4.5",
+    "bootstrap": "3.3.5",
+    "gulp": "3.9.0"
+  }
+}
